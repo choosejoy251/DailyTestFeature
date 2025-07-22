@@ -1,9 +1,10 @@
 name: Random Contribution Bot
 
-on:
-  schedule:
-   - cron: '30 3 * * *'  # 10:30 PM Central Time
 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 3 * * *'
 jobs:
   random-commit:
     runs-on: ubuntu-latest
