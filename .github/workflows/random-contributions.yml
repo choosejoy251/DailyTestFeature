@@ -5,7 +5,7 @@ permissions:
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 3 * * *'
+    - cron: '30 3 * * *'  # 10:30 PM Central Time
 jobs:
   random-commit:
     runs-on: ubuntu-latest
