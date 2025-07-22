@@ -1,0 +1,39 @@
+name: Random Contribution Bot
+
+on:
+  schedule:
+    - cron: '0 13 * * *'  # Runs daily at 1 PM UTC
+
+jobs:
+  random-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Decide whether to run today
+        run: |
+          PROCEED=$((RANDOM % 100))
+          if [ $PROCEED -gt 70 ]; then
+            echo "Skipping today to simulate randomness (value=$PROCEED)"
+            exit 0
+          fi
+
+      - name: Generate 1 to 3 commits
+        run: |
+          COMMITS=$((1 + RANDOM % 3))
+          echo "Making $COMMITS commits today."
+
+          git config --local user.email "hugorogerjbs@gmail.com"
+          git config --local user.name "choosejoy251"
+
+          for i in $(seq 1 $COMMITS); do
+            echo "Commit number $i at $(date)" >> daily-activity-log.txt
+            git add daily-activity-log.txt
+            git commit -m "Automated commit $i of $COMMITS"
+            sleep $((5 + RANDOM % 10))
+          done
+
+      - name: Push commits
+        run: git push
